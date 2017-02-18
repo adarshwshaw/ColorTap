@@ -24,7 +24,7 @@ public class SplashActivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent i=new Intent(mContext,MainMenu.class);
+                    Intent i=new Intent(mContext,MainRenderer.class);
                     startActivity(i);
                 }
             }
