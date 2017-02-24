@@ -46,7 +46,9 @@ public class Surface extends SurfaceView implements Runnable{
         }
     }
 
-    private void update(){}
+    private void update(){
+        mGame_classic.update();
+    }
 
     private void render(){
         final float scaleX=getWidth()/(WIDTH*1.0f);
