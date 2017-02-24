@@ -18,13 +18,13 @@ public class Surface extends SurfaceView implements Runnable{
     private Thread mLoop;
     private boolean isrunning;
     //temp
-    Game g;
+    Game_Classic mGame_classic;
     public Surface(Context context) {
         super(context);
         mSurfaceHolder=getHolder();
         mLoop=new Thread(this); //redering thread
         isrunning=true;
-        g=new Game(States.Classic);
+        mGame_classic=new Game_Classic();
         mLoop.start();
     }
 
@@ -56,7 +56,7 @@ public class Surface extends SurfaceView implements Runnable{
         final int savedState=canvas.save();
         canvas.scale(scaleX,scaleY);
         ////////////////////////////
-        g.render(canvas);
+        mGame_classic.render(canvas);
         ////////////////////////////
         canvas.restoreToCount(savedState);
         mSurfaceHolder.unlockCanvasAndPost(canvas);
