@@ -12,7 +12,7 @@ import java.util.Random;
 public class Ball extends GameObject {
     private float speedX, speedY;
     public static int radius = 30;
-
+    private int colors[]={0xffffff00,0xffff0000,0xff0000ff};
     public Paint mPaint;
 
     public Ball() {
@@ -20,8 +20,10 @@ public class Ball extends GameObject {
         Random r = new Random();
         speedX = r.nextFloat() * 15f;
         speedY = r.nextFloat() * 15f;
+        if(speedX<1) speedX++;
         mPaint = new Paint();
-        mPaint.setColor(0xffffff00);
+        int color=colors[r.nextInt(3)];
+        mPaint.setColor(color);
     }
 
     private void collisionupdate() {

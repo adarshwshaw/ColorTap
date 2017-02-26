@@ -3,6 +3,7 @@ package age.com.colortap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 
 /**
  * Created by Adarsh Shaw on 21-Feb-17.
@@ -37,5 +38,10 @@ public class Game_Classic {
         paint1=paint2;
         paint2=p;*/
         mBall.update();
+    }
+
+    public void Ontouch(MotionEvent e)
+    {
+
     }
 }

@@ -3,6 +3,7 @@ package age.com.colortap;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -55,6 +56,7 @@ public class Surface extends SurfaceView implements Runnable{
         final float scaleY=getHeight()/(HEIGHT*1.0f);
 
         Canvas canvas=mSurfaceHolder.lockCanvas();
+        if(canvas==null) return;
         final int savedState=canvas.save();
         canvas.scale(scaleX,scaleY);
         ////////////////////////////
@@ -62,5 +64,9 @@ public class Surface extends SurfaceView implements Runnable{
         ////////////////////////////
         canvas.restoreToCount(savedState);
         mSurfaceHolder.unlockCanvasAndPost(canvas);
+    }
+
+    public void Ontouch(MotionEvent e){
+        mGame_classic.Ontouch(e);
     }
 }
