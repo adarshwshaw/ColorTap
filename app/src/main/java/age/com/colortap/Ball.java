@@ -2,6 +2,7 @@ package age.com.colortap;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -18,9 +19,10 @@ public class Ball extends GameObject {
     public Ball() {
         super((Surface.WIDTH / 2 - radius), (Surface.HEIGHT / 2 - radius), radius, radius);
         Random r = new Random();
-        speedX = r.nextFloat() * 15f;
-        speedY = r.nextFloat() * 15f;
-        if(speedX<1) speedX++;
+        speedX = r.nextFloat() * 20f;
+        speedY = r.nextFloat() * 20f;
+//        if(speedX<=20) speedX=10;
+        if(speedX<1) speedX=1;
         mPaint = new Paint();
         int color=colors[r.nextInt(3)];
         mPaint.setColor(color);
@@ -37,6 +39,7 @@ public class Ball extends GameObject {
         collisionupdate();
         x += speedX;
         y += speedY;
+        System.out.println(speedX+" "+speedY);
         speedX = (speedX > 20) ? 20 : speedX;
         speedY = (speedY > 20) ? 20 : speedY;
     }
@@ -44,14 +47,26 @@ public class Ball extends GameObject {
     public void collisionupdate(Ball ball) {
         if (!(this.getCollisionRect().intersect(ball.getCollisionRect())))
             return;
-        Rect r = ball.getCollisionRect();
-        if (getCollisionRect().left <= r.right && getCollisionRect().top < r.bottom && getCollisionRect().bottom > r.top)
+        if(getTopRect().intersect(ball.getBottomRect()) || getBottomRect().intersect(ball.getTopRect()))
+            speedY*= -1;
+        else if(getLeftRect().intersect(ball.getRightRect()) || getRightRect().intersect(ball.getLeftRect()))
             speedX *= -1;
-        else if (getCollisionRect().right >= r.left && getCollisionRect().top < r.bottom && getCollisionRect().bottom > r.top)
-            speedX *= -1;
-        else if (getCollisionRect().top <= r.bottom && getCollisionRect().left < r.right && getCollisionRect().right > r.left)
-            speedY *= -1;
-        else if (getCollisionRect().bottom >= r.top && getCollisionRect().left < r.right && getCollisionRect().right > r.left)
-            speedY *= -1;
+    }
+
+    private Rect getTopRect()
+    {
+        return new Rect(x+2,y,x+mWidth-2,y+5);
+    }
+    private Rect getBottomRect()
+    {
+        return new Rect(x+2,y+mHeight-5,x+mWidth-2,y+mHeight);
+    }
+    private Rect getRightRect()
+    {
+        return new Rect(x+mWidth-5,y+2,x+mWidth,y+mHeight-2);
+    }
+    private Rect getLeftRect()
+    {
+        return new Rect(x,y+2,x+5,y+mHeight-2);
     }
 }

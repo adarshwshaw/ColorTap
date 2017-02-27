@@ -1,8 +1,6 @@
 package age.com.colortap;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 
 /**
@@ -11,24 +9,23 @@ import android.view.MotionEvent;
 
 public class Game_Classic {
 
-    private Rect pad1,pad2;
-    private Paint paint1,paint2;
     private Ball mBall;
+    private ColorSpace mColorSpace[];
 
     public Game_Classic(){
-        pad1=new Rect(0,0,128,Surface.HEIGHT);
-        paint1=new Paint();
-        paint1.setColor(0xffff0000);
-        pad2=new Rect(Surface.WIDTH-128,0,Surface.WIDTH,Surface.HEIGHT);
-        paint2=new Paint();
-        paint2.setColor(0xff0000ff);
         mBall=new Ball();
+        mColorSpace=new ColorSpace[2];
+        for(int i=0;i<2;i++)
+        {
+            mColorSpace[0]=new ColorSpace(0,0,128,Surface.HEIGHT,0xffff0000);
+            mColorSpace[1]=new ColorSpace(Surface.WIDTH-128,0,Surface.WIDTH,Surface.HEIGHT,0xff0000ff);
+        }
     }
 
     public void render(Canvas c){
         c.drawColor(0xffffffff);
-        c.drawRect(pad1,paint1);
-        c.drawRect(pad2,paint2);
+        c.drawRect(mColorSpace[0].drawrect,mColorSpace[0].mPaint);
+        c.drawRect(mColorSpace[1].drawrect,mColorSpace[1].mPaint);
         c.drawCircle(mBall.x+Ball.radius,mBall.y+Ball.radius,Ball.radius,mBall.mPaint);
     }
 
