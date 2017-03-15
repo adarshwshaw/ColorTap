@@ -24,21 +24,18 @@ public class Game_Classic {
 
     public void render(Canvas c){
         c.drawColor(0xffffffff);
-        c.drawRect(mColorSpace[0].drawrect,mColorSpace[0].mPaint);
-        c.drawRect(mColorSpace[1].drawrect,mColorSpace[1].mPaint);
-        c.drawCircle(mBall.x+Ball.radius,mBall.y+Ball.radius,Ball.radius,mBall.mPaint);
+        mColorSpace[0].render(c);
+        mColorSpace[1].render(c);
+        mBall.render(c);
     }
 
     public void update(){
-        /*Paint p;
-        p=paint1;
-        paint1=paint2;
-        paint2=p;*/
         mBall.update();
     }
 
     public void Ontouch(MotionEvent e)
     {
+        //TODO: to implement touch input for classic
 
     }
 }

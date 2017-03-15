@@ -1,5 +1,6 @@
 package age.com.colortap;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
@@ -43,6 +44,12 @@ public class Ball extends GameObject {
         speedX = (speedX > 20) ? 20 : speedX;
         speedY = (speedY > 20) ? 20 : speedY;
     }
+
+    @Override
+    public void render(Canvas c) {
+        c.drawCircle(this.x+Ball.radius,this.y+Ball.radius,Ball.radius,this.mPaint);
+    }
+
 
     public void collisionupdate(Ball ball) {
         if (!(this.getCollisionRect().intersect(ball.getCollisionRect())))

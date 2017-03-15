@@ -1,5 +1,6 @@
 package age.com.colortap;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -20,6 +21,7 @@ public abstract class GameObject {
     }
 
     public abstract void update();
+    public abstract void render(Canvas c);
 
     public Rect getCollisionRect()
     {
