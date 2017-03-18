@@ -1,6 +1,7 @@
 package age.com.colortap;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -35,7 +36,13 @@ public class Game_Classic {
 
     public void Ontouch(MotionEvent e)
     {
-        //TODO: to implement touch input for classic
-
+        //TODO:Support multi touch
+        int len=e.getPointerCount();
+        for(int i=0;i<len;i++) {
+            if (mColorSpace[0].getCollisionRect().contains((int) e.getX(i), (int) e.getY(i)))
+                mColorSpace[0].onTouch(e);
+            if (mColorSpace[1].getCollisionRect().contains((int) e.getX(i), (int) e.getY(i)))
+                mColorSpace[1].onTouch(e);
+        }
     }
 }
