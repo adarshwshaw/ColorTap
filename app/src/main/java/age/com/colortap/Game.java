@@ -12,8 +12,8 @@ public class Game {
     private Game_Classic gc;
     public Game(States gamemode){
         mGameMode=gamemode;
-        if(mGameMode==States.Classic)
-            gc=new Game_Classic();
+        //if(mGameMode==States.Classic)
+            //gc=new Game_Classic();
     }
 
     public void update(){}

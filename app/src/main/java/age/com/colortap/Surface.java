@@ -25,7 +25,7 @@ public class Surface extends SurfaceView implements Runnable{
         mSurfaceHolder=getHolder();
         mLoop=new Thread(this); //redering thread
         isrunning=true;
-        mGame_classic=new Game_Classic();
+        mGame_classic=new Game_Classic(context);
         mLoop.start();
     }
 

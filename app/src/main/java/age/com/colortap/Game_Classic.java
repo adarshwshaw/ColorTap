@@ -1,7 +1,10 @@
 package age.com.colortap;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.util.Log;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 /**
@@ -12,8 +15,10 @@ public class Game_Classic {
 
     private Ball mBall;
     private ColorSpace mColorSpace[];
+    private Bitmap mBackground;
 
-    public Game_Classic(){
+    public Game_Classic(Context c){
+        mBackground= BitmapFactory.decodeResource(c.getResources(),R.drawable.background);
         mBall=new Ball();
         mColorSpace=new ColorSpace[2];
         for(int i=0;i<2;i++)
@@ -24,7 +29,7 @@ public class Game_Classic {
     }
 
     public void render(Canvas c){
-        c.drawColor(0xffffffff);
+        c.drawBitmap(mBackground,null,new RectF(0,0,Surface.WIDTH,Surface.HEIGHT),null);
         mColorSpace[0].render(c);
         mColorSpace[1].render(c);
         mBall.render(c);
@@ -39,10 +44,14 @@ public class Game_Classic {
         //TODO:Support multi touch
         int len=e.getPointerCount();
         for(int i=0;i<len;i++) {
-            if (mColorSpace[0].getCollisionRect().contains((int) e.getX(i), (int) e.getY(i)))
-                mColorSpace[0].onTouch(e);
-            if (mColorSpace[1].getCollisionRect().contains((int) e.getX(i), (int) e.getY(i)))
-                mColorSpace[1].onTouch(e);
+            int x=(int) e.getX(i);
+            int y=(int) e.getY(i);
+            int id=e.getPointerId(i);
+            int action=e.getActionMasked();
+            if (mColorSpace[0].getCollisionRect().contains(x, y))
+                mColorSpace[0].onTouch(e,action);
+            if (mColorSpace[1].getCollisionRect().contains(x, y))
+                mColorSpace[1].onTouch(e,action);
         }
     }
 }

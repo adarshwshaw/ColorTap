@@ -38,10 +38,10 @@ public class ColorSpace extends GameObject {
         msheild.render(c);
     }
 
-    public void onTouch(MotionEvent e){
-        if(e.getActionMasked()==MotionEvent.ACTION_DOWN)
+    public void onTouch(MotionEvent e,int action){
+        if(action==MotionEvent.ACTION_POINTER_DOWN || action==MotionEvent.ACTION_DOWN)
             msheild.setActive(true);
-        else if(e.getActionMasked()==MotionEvent.ACTION_UP)
+        else if(action==MotionEvent.ACTION_POINTER_UP || action==MotionEvent.ACTION_UP)
             msheild.setActive(false);
     }
 }
