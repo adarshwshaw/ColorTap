@@ -18,7 +18,7 @@ public class Ball extends GameObject {
     public Paint mPaint;
 
     public Ball() {
-        super((Surface.WIDTH / 2 - radius), (Surface.HEIGHT / 2 - radius), radius, radius);
+        super((Surface.WIDTH / 2 - radius), (Surface.HEIGHT / 2 - radius), radius*2, radius*2,States.BALL);
         Random r = new Random();
         speedX = r.nextFloat() * 20f;
         speedY = r.nextFloat() * 20f;
@@ -48,16 +48,30 @@ public class Ball extends GameObject {
     @Override
     public void render(Canvas c) {
         c.drawCircle(this.x+Ball.radius,this.y+Ball.radius,Ball.radius,this.mPaint);
+
     }
 
 
-    public void collisionupdate(Ball ball) {
-        if (!(this.getCollisionRect().intersect(ball.getCollisionRect())))
-            return;
-        if(getTopRect().intersect(ball.getBottomRect()) || getBottomRect().intersect(ball.getTopRect()))
-            speedY*= -1;
-        else if(getLeftRect().intersect(ball.getRightRect()) || getRightRect().intersect(ball.getLeftRect()))
+    public boolean collisionupdate(GameObject object) {
+        if (!(this.getCollisionRect().intersect(object.getCollisionRect())))
+            return false;
+        if(object.mstate==States.BALL){
+            Ball ball= (Ball) object;
+            if(getTopRect().intersect(ball.getBottomRect()) || getBottomRect().intersect(ball.getTopRect()))
+                speedY*= -1;
+            else if(getLeftRect().intersect(ball.getRightRect()) || getRightRect().intersect(ball.getLeftRect()))
+                speedX *= -1;
+            return false;
+        }
+        else if(object.mstate==States.SHIELD){
             speedX *= -1;
+            return false;
+        }
+        else if(object.mstate==States.COLORSPACE){
+            if(object.getCollisionRect().intersect(this.getCollisionRect()))
+                return true;//TODO:delete from list of balls
+        }
+        return false;
     }
 
     private Rect getTopRect()

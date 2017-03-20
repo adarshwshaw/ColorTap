@@ -5,5 +5,6 @@ package age.com.colortap;
  */
 
 public enum States {
-    Game,Menu,Classic
+    Game,Menu,Classic,
+    COLORSPACE,BALL,SHIELD
 }

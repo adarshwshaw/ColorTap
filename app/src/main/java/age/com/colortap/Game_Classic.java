@@ -7,36 +7,68 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Adarsh Shaw on 21-Feb-17.
  */
 
 public class Game_Classic {
 
-    private Ball mBall;
     private ColorSpace mColorSpace[];
     private Bitmap mBackground;
+    private List<Ball> mballs;
+    private int counter;
 
     public Game_Classic(Context c){
         mBackground= BitmapFactory.decodeResource(c.getResources(),R.drawable.background);
-        mBall=new Ball();
+        mballs=new ArrayList<Ball>();
+        Ball mBall=new Ball();
+        mballs.add(mBall);
         mColorSpace=new ColorSpace[2];
         for(int i=0;i<2;i++)
         {
             mColorSpace[0]=new ColorSpace(0,0,128,Surface.HEIGHT,0xffff0000);
             mColorSpace[1]=new ColorSpace(Surface.WIDTH-128,0,Surface.WIDTH,Surface.HEIGHT,0xff0000ff);
         }
+        counter=0;
     }
 
     public void render(Canvas c){
         c.drawBitmap(mBackground,null,new RectF(0,0,Surface.WIDTH,Surface.HEIGHT),null);
         mColorSpace[0].render(c);
         mColorSpace[1].render(c);
-        mBall.render(c);
+        for (Ball b:mballs){
+            b.render(c);
+        }
     }
 
     public void update(){
-        mBall.update();
+        counter++;
+        for(int i=0;i<mballs.size();i++){
+            for(int j=i+1;j<mballs.size();j++){
+                mballs.get(i).collisionupdate(mballs.get(j));
+            }
+        }
+        for (Ball b:mballs){
+            for (int i=0;i<2;i++){
+                if(mColorSpace[i].msheild.isActive())
+                    b.collisionupdate(mColorSpace[i].msheild);
+                else{
+                    boolean m=b.collisionupdate(mColorSpace[i]);
+                    if(m)
+                        mballs.remove(b);
+                }
+            }
+        }
+        for (Ball b:mballs){
+            b.update();
+        }
+        if(counter>120 && mballs.size()<3){
+           counter=0;
+            mballs.add(new Ball());
+        }
     }
 
     public void Ontouch(MotionEvent e)

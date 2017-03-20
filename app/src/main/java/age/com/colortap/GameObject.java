@@ -11,13 +11,15 @@ import android.graphics.Rect;
 public abstract class GameObject {
     protected int x,y;
     protected int mWidth,mHeight;
+    protected States mstate;
 
-    public GameObject(int x,int y,int width,int height)
+    public GameObject(int x,int y,int width,int height,States states)
     {
         this.x=x;
         this.y=y;
         mWidth=width;
         mHeight=height;
+        mstate=states;
     }
 
     public abstract void update();

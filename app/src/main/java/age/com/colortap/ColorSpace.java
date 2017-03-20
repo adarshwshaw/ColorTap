@@ -14,9 +14,9 @@ public class ColorSpace extends GameObject {
     Rect drawrect;
     Paint mPaint;
     //Rect shield;
-    Sheild msheild;
+    public Sheild msheild;
     public ColorSpace(int x, int y, int width, int height,int color) {
-        super(x, y, width, height);
+        super(x, y, width, height,States.COLORSPACE);
         drawrect=new Rect(x,y,width,height);
         mPaint=new Paint();
         mPaint.setColor(color);
@@ -24,8 +24,6 @@ public class ColorSpace extends GameObject {
             msheild=new Sheild(x-10,0,10,height);
         else
             msheild=new Sheild(width,0,10,height);
-//        shieldcolor=new Paint();
-//        shieldcolor.setColor(0xdd00aadd);
     }
 
     public void update() {
