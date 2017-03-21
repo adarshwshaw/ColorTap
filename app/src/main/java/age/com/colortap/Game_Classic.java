@@ -6,9 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.view.MotionEvent;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Adarsh Shaw on 21-Feb-17.
@@ -18,7 +16,7 @@ public class Game_Classic {
 
     private ColorSpace mColorSpace[];
     private Bitmap mBackground;
-    private List<Ball> mballs;
+    private ArrayList<Ball> mballs;
     private int counter;
 
     public Game_Classic(Context c){
@@ -46,34 +44,39 @@ public class Game_Classic {
 
     public void update(){
         counter++;
-        for(int i=0;i<mballs.size();i++){
-            for(int j=i+1;j<mballs.size();j++){
+        for (int i = 0; i < mballs.size(); i++) {
+            for (int j = i + 1; j < mballs.size(); j++) {
                 mballs.get(i).collisionupdate(mballs.get(j));
             }
         }
-        for (Ball b:mballs){
-            for (int i=0;i<2;i++){
-                if(mColorSpace[i].msheild.isActive())
-                    b.collisionupdate(mColorSpace[i].msheild);
-                else{
-                    boolean m=b.collisionupdate(mColorSpace[i]);
-                    if(m)
-                        mballs.remove(b);
+        for (int j=0;j<mballs.size();j++) {
+            for (int i = 0; i < 2; i++) {
+                if (mColorSpace[i].msheild.isActive())
+                    mballs.get(j).collisionupdate(mColorSpace[i].msheild);
+                else {
+                    boolean m = mballs.get(j).collisionupdate(mColorSpace[i]);
+                    if (m) {
+                        mballs.remove(j);
+                        break;
+                    }
                 }
             }
         }
-        for (Ball b:mballs){
+        for (Ball b : mballs) {
             b.update();
         }
-        if(counter>120 && mballs.size()<3){
+        if(counter>120 && mballs.size()<16){
            counter=0;
-            mballs.add(new Ball());
+            try {
+                mballs.add(new Ball());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
     public void Ontouch(MotionEvent e)
     {
-        //TODO:Support multi touch
         int len=e.getPointerCount();
         for(int i=0;i<len;i++) {
             int x=(int) e.getX(i);

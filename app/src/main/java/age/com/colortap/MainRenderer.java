@@ -2,6 +2,7 @@ package age.com.colortap;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,8 @@ public class MainRenderer extends Activity implements View.OnTouchListener{
 
     public boolean onTouch(View v, MotionEvent event) {
         mSurface.Ontouch(event);
+        Log.d("dfos","dsfjod");
+        System.out.println("fsijdf");
         return true;
     }
 }

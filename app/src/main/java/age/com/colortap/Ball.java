@@ -68,8 +68,8 @@ public class Ball extends GameObject {
             return false;
         }
         else if(object.mstate==States.COLORSPACE){
-            if(object.getCollisionRect().intersect(this.getCollisionRect()))
-                return true;//TODO:delete from list of balls
+            if(object.getCollisionRect().contains(this.getCollisionRect()))
+                return true;
         }
         return false;
     }
