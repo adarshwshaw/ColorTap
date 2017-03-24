@@ -57,13 +57,22 @@ public class Ball extends GameObject {
             return false;
         if(object.mstate==States.BALL){
             Ball ball= (Ball) object;
-            if(getTopRect().intersect(ball.getBottomRect()) || getBottomRect().intersect(ball.getTopRect()))
+            if(getTopRect().intersect(ball.getBottomRect()) || getBottomRect().intersect(ball.getTopRect())){
                 speedY*= -1;
-            else if(getLeftRect().intersect(ball.getRightRect()) || getRightRect().intersect(ball.getLeftRect()))
+                ball.speedY*= -1;
+            }
+            else if(getLeftRect().intersect(ball.getRightRect()) || getRightRect().intersect(ball.getLeftRect())){
                 speedX *= -1;
+                ball.speedX *= -1;
+            }
             return false;
         }
         else if(object.mstate==States.SHIELD){
+            if(x<138)
+                x=138;
+            else
+                x=Surface.WIDTH-128-10-radius*2;
+
             speedX *= -1;
             return false;
         }
